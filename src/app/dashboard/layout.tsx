@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 function NavBar() {
   return (
     <nav className={styles.nav_bar} id="nav_bar">
-      <h1 className={styles.web_name}>STRENGTH<br />ROOSTER</h1>
+      <h1 className={styles.web_name}>雞</h1>
     </nav>
   )
 }
