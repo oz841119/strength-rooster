@@ -9,7 +9,7 @@ type BasicCardProps = {
 export default function BasicCard({title, children, fontColor, styleColor, selection}: BasicCardProps) {
     return (
         <div 
-            className="inline-block rounded-xl overflow-hidden" 
+            className="inline-block rounded-xl overflow-hidden shadow-lg" 
             style={{ 
                 color: fontColor, backgroundColor: styleColor, 
                 border: `2px solid ${styleColor}`

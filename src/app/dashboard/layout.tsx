@@ -5,6 +5,7 @@ import styles from './layout.module.scss'
 import ToggleModeNavItem from './ToggleModeNavItem'
 import AddchartIcon from '@mui/icons-material/Addchart'
 import AnalyticsIcon from '@mui/icons-material/Analytics'
+import LoginIcon from '@mui/icons-material/Login';
 import { usePathname } from 'next/navigation';
 
 
@@ -20,12 +21,18 @@ function SideBar() {
   const routePathName = usePathname()
   const ROUTE_PATH = {
     'addTrain': '/dashboard/add-train',
-    'record': '/dashboard/record'
+    'record': '/dashboard/record',
+    'login': '/login'
   }
   const isCurrRoute = (pathName: string) => pathName === routePathName
   
   return (
     <nav className={styles.side_bar} id="side_bar">
+      <Link href={ROUTE_PATH.login}>
+        <LoginIcon 
+          className={`${styles.side_item} ${isCurrRoute(ROUTE_PATH.login) && styles.side_item_active}`}
+        />
+      </Link>
       <Link href={ROUTE_PATH.addTrain}>
         <AddchartIcon 
           className={`${styles.side_item} ${isCurrRoute(ROUTE_PATH.addTrain) && styles.side_item_active}`}
