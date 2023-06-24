@@ -30,7 +30,7 @@ export default function BasicLineChart({data, dataKey}: LineChartAsAvgTrainingRe
     )
   }
   return (
-    <ResponsiveContainer width="100%" height="80%">
+    <ResponsiveContainer width="100%" height="100%">
       <LineChart data={data}>
         <XAxis dataKey="date" interval="preserveStartEnd" tick={{fontSize: 10}}/>
         <YAxis type="number" domain={['dataMin-10', 'dataMax+10']} hide/>

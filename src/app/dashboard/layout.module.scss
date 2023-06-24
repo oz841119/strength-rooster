@@ -27,9 +27,12 @@
     align-items: center;
     height: 40px;
     width: 40px;
-    fill: inherit;
-    color: inherit;
+    color: #000;
     cursor: pointer;
+  }
+
+  .side_item_active {
+    color: #007bff
   }
 }
 .side_bar_and_main {
