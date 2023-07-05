@@ -11,11 +11,12 @@ import dayjs from 'dayjs';
 export default function TrainingForm() {
   const { handleSubmit, reset, control } = useForm({
     defaultValues: {
-      action: '',
+      name: '',
       weight: '',
-      groups: '',
-      times: '',
-      date: dayjs()
+      sets: '',
+      reps: '',
+      date: dayjs(),
+      note: ''
     }
   });
   const formReset = () => {
@@ -23,7 +24,27 @@ export default function TrainingForm() {
   }
   const submit = (sourceForm: any) => {
     const form = JSON.parse(JSON.stringify(sourceForm))
-    form.date = dayjs(form.date.slice(0, 10)).valueOf()
+    form.date = form.date.slice(0, 10)
+    form.sets = Number(form.sets)
+    form.reps = Number(form.reps)
+    form.weight = Number(form.weight)
+    createRecord()
+
+    function createRecord() {
+      const access_token = JSON.parse(localStorage.getItem('user')!).access_token
+      fetch('http://localhost:3000/fitness-record', {
+        method: 'POST',
+        body: JSON.stringify(form),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'authorization': access_token
+        }
+      })
+        .then(res => res.json)
+        .then(res => {
+          console.log(res);
+        })
+    }
   }
   return (
     <Box
@@ -50,7 +71,7 @@ export default function TrainingForm() {
         />
       </LocalizationProvider>
       <Controller
-        name="action"
+        name="name"
         control={control}
         render={({ field }) => (
           <TextField {...field} fullWidth size="small" label="訓練動作" variant="outlined" />
@@ -64,17 +85,24 @@ export default function TrainingForm() {
         )}
       />
       <Controller
-        name="times"
+        name="reps"
         control={control}
         render={({ field }) => (
           <TextField {...field} className="w-5/12" size="small" label="次數" type="number" variant="outlined" />
         )}
       />
       <Controller
-        name="groups"
+        name="sets"
         control={control}
         render={({ field }) => (
           <TextField {...field} className="w-5/12" size="small" label="組數" type="number" variant="outlined" />
+        )}
+      />
+      <Controller
+        name="note"
+        control={control}
+        render={({ field }) => (
+          <TextField {...field} fullWidth size="small" label="筆記" variant="outlined" />
         )}
       />
       <div className="w-full flex justify-end gap-4">

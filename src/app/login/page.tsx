@@ -19,7 +19,7 @@ export default function Page() {
   const handleLogin = () => {
     const {value: account} = document.getElementById('login-account') as HTMLInputElement
     const {value: password} = document.getElementById('login-password') as HTMLInputElement
-    fetch('http://localhost:3000/login', {
+    fetch('http://localhost:3000/auth/sign-in', {
       method: 'POST',
       body: JSON.stringify({account, password}),
       headers: {
@@ -28,12 +28,18 @@ export default function Page() {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res);
-      
-      const { account: apiAccount } = res
-      if(apiAccount === account) {
-        window.localStorage.setItem('user', JSON.stringify({account, password}))
+      const { access_token } = res
+      if(access_token) {
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({
+            account,
+            password,
+            access_token: 'Bearer ' + access_token
+          })
+        )
         router.push('/dashboard')
+        return
       }
     })
   }
