@@ -1,10 +1,11 @@
 "use client"
-import { Button, TextField } from "@mui/material";
+import { Alert, Button, Snackbar, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const router = useRouter()
+  const [alertMessage, setAlertMessage] = useState(false)
 
   useEffect(() => {
     const userJSON = window.localStorage.getItem('user')
@@ -29,6 +30,9 @@ export default function Page() {
     .then(res => res.json())
     .then(res => {
       const { access_token } = res
+      if(!access_token) {
+        setAlertMessage(true)
+      }
       if(access_token) {
         window.localStorage.setItem(
           'user',
@@ -43,6 +47,7 @@ export default function Page() {
       }
     })
   }
+  
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-80 flex flex-col gap-5">
@@ -50,6 +55,19 @@ export default function Page() {
         <TextField id="login-password" label="密碼" variant="outlined" />
         <Button variant="contained" onClick={handleLogin}>LOGIN</Button>
       </div>
+      <AlertHint message={'登入失敗'} open={alertMessage} onClose={() => setAlertMessage(false)}/>
     </div>
+  )
+}
+
+
+function AlertHint({open, message, onClose}: any) {
+  const handleClose = () => onClose()
+  return (
+    <Snackbar anchorOrigin={{vertical: 'top', horizontal: 'center'}} open={open} autoHideDuration={1000} onClose={handleClose}>
+      <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+        {message}
+      </Alert>
+    </Snackbar>
   )
 }
