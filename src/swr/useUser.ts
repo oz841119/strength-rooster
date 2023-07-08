@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 
 export default function useUser(key: any) {
+    if(typeof window === 'undefined') return {data: null, error: null, isLoading: true}
     const API_URL = process.env.NEXT_PUBLIC_API_URL as string + '/users'
     const user = JSON.parse(window.localStorage.getItem('user')!)
     const fetcher = () => fetch(API_URL, {

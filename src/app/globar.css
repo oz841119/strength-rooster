@@ -35,3 +35,12 @@ body {
 .common-border-b {
   border-bottom: 2px solid #ffffff3a;
 }
+
+.common-border-title {
+  border: 2px solid #ffffff3a;
+  border-bottom: unset;
+}
+
+.common-border {
+  border: 2px solid #ffffff3a;
+}

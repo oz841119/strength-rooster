@@ -1,4 +1,5 @@
-import TopBar from './TopBar'
+import Menu from './components/Menu'
+import TopBar from './components/TopBar'
 
 export const metadata = {
   title: 'Dashboard - 健身雞',
@@ -9,6 +10,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <div>
       <TopBar/>
       {children}
+      <Menu/>
     </div>
   )
 }

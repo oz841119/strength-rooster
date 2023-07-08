@@ -4,11 +4,10 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useRouter } from "next/navigation";
 export default function TopBar() {
     const {data: user, error, isLoading} = useUser('key')
-    if(isLoading) return <Loading/>
     return (
         <div className="py-4 px-10 common-border-b flex justify-between items-center">
             <Title/>
-            <Info account={user.account} isLoading={isLoading}/>
+            <Info account={user?.account} isLoading={isLoading}/>
         </div>
     )
 }
