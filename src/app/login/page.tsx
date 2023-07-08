@@ -1,12 +1,16 @@
 "use client"
+import useUser from "@/swr/useUser";
 import { Alert, Button, Snackbar, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+type AlertMessage = {
+  isActive: boolean
+  message: string
+}
 export default function Page() {
   const router = useRouter()
-  const [alertMessage, setAlertMessage] = useState(false)
-
+  const [alertMessage, setAlertMessage] = useState<AlertMessage>({isActive: false, message: ''})
   useEffect(() => {
     const userJSON = window.localStorage.getItem('user')
     if(userJSON) {
@@ -31,7 +35,7 @@ export default function Page() {
     .then(res => {
       const { access_token } = res
       if(!access_token) {
-        setAlertMessage(true)
+        setAlertMessage({isActive: true, message: '登入失敗'})
       }
       if(access_token) {
         window.localStorage.setItem(
@@ -47,6 +51,35 @@ export default function Page() {
       }
     })
   }
+
+  const handleRegister = () => {
+    const {value: account} = document.getElementById('login-account') as HTMLInputElement
+    const {value: password} = document.getElementById('login-password') as HTMLInputElement
+    fetch('http://localhost:3000/users', {
+      method: 'POST',
+      body: JSON.stringify({account, password}),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      }
+    })
+    .then(res => {
+      switch (res.status) {
+        case 201: {
+          setAlertMessage({isActive: true, message: '註冊成功'})
+          handleLogin()
+          break
+        }
+        case 409: {
+          setAlertMessage({isActive: true, message: '註冊失敗'})
+          break
+        }
+        case 400: {
+          setAlertMessage({isActive: true, message: '註冊異常'})
+          break
+        }
+      }
+    })
+  }
   
   return (
     <div className="flex items-center justify-center h-screen">
@@ -54,8 +87,13 @@ export default function Page() {
         <TextField id="login-account" label="帳號" variant="outlined" />
         <TextField id="login-password" label="密碼" variant="outlined" />
         <Button variant="contained" onClick={handleLogin}>LOGIN</Button>
+        <Button variant="contained" onClick={handleRegister}>REGISTER</Button>
       </div>
-      <AlertHint message={'登入失敗'} open={alertMessage} onClose={() => setAlertMessage(false)}/>
+      <AlertHint 
+        message={alertMessage.message}
+        open={alertMessage.isActive}
+        onClose={() => setAlertMessage({isActive: false, message: ''})}
+      />
     </div>
   )
 }

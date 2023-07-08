@@ -9,29 +9,21 @@
 }
 
 body {
-  background-color: var(--body-main-bg-color-light);
-  color: var(--font-color-light);
-  font-size: 16px;
-  min-height: 100vh;  
+  background-color: #292D32;
+  color: #ffffff;
+  font-family: var(--font-inter), var(--font-noto-sans-tc);
 }
-
-body .side-dark-mode {
-  background-color: var(--side-bg-color-dark);
-}
-
-.font-color-dark-mode {
-  color: var(--font-color-dark)
-}
-
-.body-dark-mode {
-  background-color: var(--body-main-bg-color-dark);
-}
-
 
 .flex-center {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.flex-center-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .flex-start {
@@ -40,8 +32,6 @@ body .side-dark-mode {
   flex-wrap: wrap;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+.common-border-b {
+  border-bottom: 2px solid #ffffff3a;
 }
