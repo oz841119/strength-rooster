@@ -1,12 +1,17 @@
 "use client"
 import fetchWithJWT from "@/utils/globarFetch";
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, Chip, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { AddCircle, AddTask, BorderColor } from "@mui/icons-material";
+import 'dayjs/locale/zh-cn';
+
 
 export default function Page() {
   const [trainings, setTrainings] = useState<Training[] | []>([])
+  const [tags, setTags] = useState<string[]>([])
+  const [trainingTags, setTrainingTags] = useState<string[]>([])
   useEffect(() => {
     fetchWithJWT('/fitness-record')
       .then(res => res.json())
@@ -14,20 +19,33 @@ export default function Page() {
         if (Array.isArray(res)) setTrainings(res)
       })
   }, [])
+
+  const createTag = (tagName: string) => { // 添加可選的Tag
+    setTags([...tags, tagName])
+  }
+  const addTag = (tagName: string) => { // 添加為當次訓練的Tag
+    setTrainingTags([...trainingTags, tagName])
+  }
+  const deleteTag = (tagName: string) => {
+    const newTags = tags.filter(tag => tag !== tagName)
+    setTags(newTags)
+  }
   return (
     <div className="py-4 px-10">
       <div className="mb-12">
         <div className="py-2 px-4 common-border-title inline-block font-bold bg-zinc-800">新增訓練</div>
         <div className="py-4 px-4 common-border">
-          <CreateTrainingForm />
+          <CreateTrainingForm/>
+          <Tags tags={trainingTags}/>
+          <hr className="my-4" />
+          <CreateTags onCreateTag={(tabName: string) => createTag(tabName)}></CreateTags>
+          <Tags tags={tags} onDelete={deleteTag} onAdd={addTag}/>
         </div>
       </div>
 
       <div>
         <div className="py-2 px-4 common-border-title inline-block font-bold bg-slate-800">近期新增</div>
-        <div className="py-1 px-4 common-border">
-          <LatestTable trainings={trainings} />
-        </div>
+        <LatestTable trainings={trainings} />
       </div>
     </div>
   )
@@ -38,7 +56,7 @@ function CreateTrainingForm() {
     <Box
       component="form"
       sx={{
-        display: 'flex', gap: '12px',
+        display: 'flex', gap: '12px', mb: '12px',
         '& .MuiInputBase-root': { color: "#ffffffd4" },
         '& .MuiFormLabel-root': { color: '#ffffffd4 !important' },
         '& .MuiButtonBase-root': { color: '#fff' },
@@ -58,6 +76,67 @@ function CreateTrainingForm() {
       <TextField size="small" id="outlined-basic" label="組數" variant="outlined" />
       <TextField size="small" id="outlined-basic" label="筆記" variant="outlined" />
     </Box>
+  )
+}
+
+function CreateTags({ onCreateTag }: { onCreateTag: (tagName: string) => void }) {
+  const createTag = () => { // 創建可選的Tag
+    const inp = (document.getElementById('tagName-inp') as HTMLInputElement)
+    if (!inp.value) return
+    onCreateTag(inp.value)
+    inp.value = ''
+  }
+  return (
+    <div className="text-cyan-400 my-5 flex items-center">
+      <div>
+        <TextField
+          size="small"
+          id="tagName-inp"
+          label="新增標籤"
+          variant="outlined"
+          sx={{
+            '& .MuiInputBase-root': { color: "#22d3ee" },
+            '& .MuiFormLabel-root': { color: '#22d3ee !important' },
+            '& .MuiButtonBase-root': { color: '#22d3ee' },
+            '& .MuiOutlinedInput-notchedOutline': { borderColor: '#22d3ee !important' }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') createTag()
+          }}
+        />
+        <IconButton aria-label="create-tagName" size="large" color="info" onClick={createTag}>
+          <AddCircle className="w-4 h-4" />
+        </IconButton>
+      </div>
+    </div>
+  )
+}
+
+interface TagsProps {
+  tags: string[]
+  onDelete?: (tagName: string) => void
+  onAdd?: (tagName: string) => void
+}
+function Tags({ tags, onDelete, onAdd }: TagsProps) {
+  const handleDelete = (tagName: string) => {
+    if(onDelete) onDelete(tagName)
+  }
+
+  const addTag = (tagName: string) => { // 添加被當次紀錄應用的Tag
+    if(onAdd) onAdd(tagName)
+  }
+  return (
+    <div className="flex gap-3">
+      {tags.map((tagName, index) => (
+        <Chip
+          onClick={() => addTag(tagName)}
+          label={tagName}
+          key={index}
+          color="primary"
+          onDelete={() => handleDelete(tagName)}
+        />
+      ))}
+    </div>
   )
 }
 
