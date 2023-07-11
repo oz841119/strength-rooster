@@ -2,11 +2,19 @@
 import fetchWithJWT from "@/utils/globarFetch";
 import { Box, Button, Chip, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AddCircle, AddTask, BorderColor } from "@mui/icons-material";
 import 'dayjs/locale/zh-cn';
 
+type Form = {
+  date: string;
+  name: string;
+  weight: string;
+  sets: string;
+  reps: string;
+  note: string
+}
 
 export default function Page() {
   const [trainings, setTrainings] = useState<Training[] | []>([])
@@ -23,23 +31,44 @@ export default function Page() {
   const createTag = (tagName: string) => { // 添加可選的Tag
     setTags([...tags, tagName])
   }
-  const addTag = (tagName: string) => { // 添加為當次訓練的Tag
+  const addTrainingTag = (tagName: string) => { // 添加為當次訓練的Tag
     setTrainingTags([...trainingTags, tagName])
   }
   const deleteTag = (tagName: string) => {
     const newTags = tags.filter(tag => tag !== tagName)
     setTags(newTags)
   }
+  const deleteTrainingTag = (tagName: string) => {
+    const newTags = trainingTags.filter(tag => tag !== tagName)
+    setTrainingTags(newTags)
+  }
+
+
+  const [form, setForm] = useState<Form>({
+    date: '2023-07-12',
+    name: '',
+    weight: '',
+    sets: '',
+    reps: '',
+    note: ''
+  })
+  const setFormValue = (key: string, value: string) => {
+    const target = { ...form }
+    target[key as keyof Form] = value
+    setForm(target)
+  }
+  const submit = () => { }
   return (
     <div className="py-4 px-10">
       <div className="mb-12">
         <div className="py-2 px-4 common-border-title inline-block font-bold bg-zinc-800">新增訓練</div>
         <div className="py-4 px-4 common-border">
-          <CreateTrainingForm/>
-          <Tags tags={trainingTags}/>
+          <CreateTrainingForm form={form} onChange={setFormValue} />
+          <Tags tags={trainingTags} onDelete={deleteTrainingTag} />
+          <div className="common-border py-1 px-2 cursor-pointer inline-block hover:bg-slate-600" onClick={submit}>送出</div>
           <hr className="my-4" />
           <CreateTags onCreateTag={(tabName: string) => createTag(tabName)}></CreateTags>
-          <Tags tags={tags} onDelete={deleteTag} onAdd={addTag}/>
+          <Tags tags={tags} onDelete={deleteTag} onAdd={addTrainingTag} />
         </div>
       </div>
 
@@ -51,10 +80,16 @@ export default function Page() {
   )
 }
 
-function CreateTrainingForm() {
+function CreateTrainingForm({ form, onChange }: { form: Form, onChange: (key: string, value: string) => void }) {
+  const inputsChange = (event: any) => {
+    console.log(event);
+
+    onChange(event.target.id, event.target.value)
+  }
   return (
     <Box
       component="form"
+      onChange={inputsChange}
       sx={{
         display: 'flex', gap: '12px', mb: '12px',
         '& .MuiInputBase-root': { color: "#ffffffd4" },
@@ -68,13 +103,14 @@ function CreateTrainingForm() {
           slotProps={{ textField: { size: "small" } }}
           disableFuture
           format="YYYY-MM-DD"
+          onChange={asdasdasdasdasdas}
         />
       </LocalizationProvider>
-      <TextField size="small" id="outlined-basic" label="訓練動作" variant="outlined" />
-      <TextField size="small" id="outlined-basic" label="重量" variant="outlined" />
-      <TextField size="small" id="outlined-basic" label="次組" variant="outlined" />
-      <TextField size="small" id="outlined-basic" label="組數" variant="outlined" />
-      <TextField size="small" id="outlined-basic" label="筆記" variant="outlined" />
+      <TextField size="small" id="name" label="訓練動作" variant="outlined" />
+      <TextField size="small" type="number" id="weigth" label="重量" variant="outlined" />
+      <TextField size="small" id="reps" label="次組" variant="outlined" />
+      <TextField size="small" id="sets" label="組數" variant="outlined" />
+      <TextField size="small" id="note" label="筆記" variant="outlined" />
     </Box>
   )
 }
@@ -119,11 +155,11 @@ interface TagsProps {
 }
 function Tags({ tags, onDelete, onAdd }: TagsProps) {
   const handleDelete = (tagName: string) => {
-    if(onDelete) onDelete(tagName)
+    if (onDelete) onDelete(tagName)
   }
 
   const addTag = (tagName: string) => { // 添加被當次紀錄應用的Tag
-    if(onAdd) onAdd(tagName)
+    if (onAdd) onAdd(tagName)
   }
   return (
     <div className="flex gap-3">
