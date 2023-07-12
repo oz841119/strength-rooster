@@ -6,6 +6,8 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AddCircle, AddTask, BorderColor } from "@mui/icons-material";
 import 'dayjs/locale/zh-cn';
+import dayjs, { Dayjs } from "dayjs";
+
 
 type Form = {
   date: string;
@@ -57,7 +59,14 @@ export default function Page() {
     target[key as keyof Form] = value
     setForm(target)
   }
-  const submit = () => { }
+  const submit = async () => {
+    const {date, name, note, reps, sets, weight} = form
+    const body = {date, name, note, reps: Number(reps), sets: Number(sets), weight: Number(weight)}
+    const response = await fetchWithJWT('/fitness-record', 'POST', {...body, tags: trainingTags})
+    const a = await response.json()
+    console.log(a);
+    
+  }
   return (
     <div className="py-4 px-10">
       <div className="mb-12">
@@ -81,15 +90,18 @@ export default function Page() {
 }
 
 function CreateTrainingForm({ form, onChange }: { form: Form, onChange: (key: string, value: string) => void }) {
-  const inputsChange = (event: any) => {
-    console.log(event);
-
-    onChange(event.target.id, event.target.value)
+  const inputsChange = (key: string, value: Dayjs | string | null) => {
+    if(value === null) return
+    if(typeof value === 'object') {
+      onChange(key, value.format('YYYY-MM-DD'))
+    }
+    if(typeof value === 'string') {
+      onChange(key, value)
+    }
   }
   return (
     <Box
       component="form"
-      onChange={inputsChange}
       sx={{
         display: 'flex', gap: '12px', mb: '12px',
         '& .MuiInputBase-root': { color: "#ffffffd4" },
@@ -100,17 +112,18 @@ function CreateTrainingForm({ form, onChange }: { form: Form, onChange: (key: st
     >
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="zh-cn">
         <DatePicker
-          slotProps={{ textField: { size: "small" } }}
+          slotProps={{ textField: { size: "small", } }}
           disableFuture
+          defaultValue={dayjs()}
           format="YYYY-MM-DD"
-          onChange={asdasdasdasdasdas}
+          onChange={(date: Dayjs | null) => inputsChange('date', date)}
         />
       </LocalizationProvider>
-      <TextField size="small" id="name" label="訓練動作" variant="outlined" />
-      <TextField size="small" type="number" id="weigth" label="重量" variant="outlined" />
-      <TextField size="small" id="reps" label="次組" variant="outlined" />
-      <TextField size="small" id="sets" label="組數" variant="outlined" />
-      <TextField size="small" id="note" label="筆記" variant="outlined" />
+      <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="name" label="訓練動作" variant="outlined" />
+      <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" type="number" id="weight" label="重量" variant="outlined" />
+      <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="reps" label="次組" variant="outlined" />
+      <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="sets" label="組數" variant="outlined" />
+      <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="note" label="筆記" variant="outlined" />
     </Box>
   )
 }
