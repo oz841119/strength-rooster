@@ -1,6 +1,6 @@
 "use client"
 import fetchWithJWT from "@/utils/globarFetch";
-import { Box, Button, Chip, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Alert, AlertColor, Box, Button, Chip, IconButton, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -59,13 +59,25 @@ export default function Page() {
     target[key as keyof Form] = value
     setForm(target)
   }
+  type AlertMessage = {
+    isActive: boolean;
+    message: string;
+    severity: AlertColor;
+  }
+  const [alertMessage, setAlertMessage] = useState<AlertMessage>({
+    severity: 'success',
+    isActive: false,
+    message: ''
+  })
   const submit = async () => {
-    const {date, name, note, reps, sets, weight} = form
-    const body = {date, name, note, reps: Number(reps), sets: Number(sets), weight: Number(weight)}
-    const response = await fetchWithJWT('/fitness-record', 'POST', {...body, tags: trainingTags})
-    const a = await response.json()
-    console.log(a);
-    
+    const { date, name, note, reps, sets, weight } = form
+    const body = { date, name, note, reps: Number(reps), sets: Number(sets), weight: Number(weight) }
+    const response = await fetchWithJWT('/fitness-record', 'POST', { ...body, tags: trainingTags })
+    if (response.status === 201) {
+      setAlertMessage({ isActive: true, message: '新增成功', severity: 'success' })
+    } else {
+      setAlertMessage({ isActive: true, message: '新增失敗', severity: 'error' })
+    }
   }
   return (
     <div className="py-4 px-10">
@@ -85,17 +97,28 @@ export default function Page() {
         <div className="py-2 px-4 common-border-title inline-block font-bold bg-slate-800">近期新增</div>
         <LatestTable trainings={trainings} />
       </div>
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={alertMessage.isActive}
+        autoHideDuration={6000}
+        onClose={() => setAlertMessage({ isActive: false, message: '', severity: 'success' })}
+      >
+        <Alert severity={alertMessage.severity}>
+          {alertMessage.message}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
 
 function CreateTrainingForm({ form, onChange }: { form: Form, onChange: (key: string, value: string) => void }) {
   const inputsChange = (key: string, value: Dayjs | string | null) => {
-    if(value === null) return
-    if(typeof value === 'object') {
+    if (value === null) return
+    if (typeof value === 'object') {
       onChange(key, value.format('YYYY-MM-DD'))
     }
-    if(typeof value === 'string') {
+    if (typeof value === 'string') {
       onChange(key, value)
     }
   }
@@ -103,7 +126,7 @@ function CreateTrainingForm({ form, onChange }: { form: Form, onChange: (key: st
     <Box
       component="form"
       sx={{
-        display: 'flex', gap: '12px', mb: '12px',
+        display: 'flex', gap: '12px', mb: '12px', flexWrap: 'wrap',
         '& .MuiInputBase-root': { color: "#ffffffd4" },
         '& .MuiFormLabel-root': { color: '#ffffffd4 !important' },
         '& .MuiButtonBase-root': { color: '#fff' },
@@ -121,7 +144,7 @@ function CreateTrainingForm({ form, onChange }: { form: Form, onChange: (key: st
       </LocalizationProvider>
       <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="name" label="訓練動作" variant="outlined" />
       <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" type="number" id="weight" label="重量" variant="outlined" />
-      <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="reps" label="次組" variant="outlined" />
+      <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="reps" label="組數" variant="outlined" />
       <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="sets" label="組數" variant="outlined" />
       <TextField onChange={(event) => inputsChange(event.target.id, event.target.value)} size="small" id="note" label="筆記" variant="outlined" />
     </Box>
