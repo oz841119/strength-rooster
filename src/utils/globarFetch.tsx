@@ -1,5 +1,6 @@
 type Method = 'POST' | 'GET' | 'DELETE' | 'PATCH'
-export default function fetchWithJWT(route: string, method: Method = 'GET', body?: any): Promise<Response> {
+export default function fetchWithJWT(route: string, method: Method = 'GET', body?: any): Promise<Response> | void {
+  if(typeof window === 'undefined') return 
   const API_URL = process.env.NEXT_PUBLIC_API_URL as string + route
   const user = JSON.parse(window.localStorage.getItem('user')!)
   return fetch(
