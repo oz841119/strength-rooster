@@ -1,19 +1,21 @@
-export default function Page() {
+import Link from "next/link";
+
+export default function Page() {  
   return (
     <div className="w-full min-h-screen text-slate-700 flex">
-      <div className="w-5/12 min-h-screen bg-white">
+      <div className="w-full min-h-screen bg-white md:w-5/12">
         <div className="flex flex-col items-center pt-36 px-3">
           <h2>STRENGTH ROOSTER</h2>
           <div className="text-slate-500 mb-10">
-            Record each training session and visualize more useful data.
+            Record each training session <br className="md:hidden"/>and visualize more useful data.
           </div>
-          <div className="w-3/5 flex flex-col">
+          <div className="w-4/5 flex flex-col">
             <label className="mb-4">
-              <div className="text-lg">Account</div>
-              <input type="text" className="w-full h-9 px-2" />
+              <div className="text-sm">Account</div>
+              <input type="text" className="w-full h-9 px-2"/>
             </label>
             <label className="mb-2">
-              <div className="text-lg">Password</div>
+              <div className="text-sm">Password</div>
               <input type="password" className="w-full h-9 px-2" />
             </label>
             <div className="flex justify-between mb-4">
@@ -26,14 +28,17 @@ export default function Page() {
             <div className="w-full text-center bg-slate-700 text-white py-2 cursor-pointer mb-4">
               LOGIN
             </div>
-            <div className="w-full text-center bg-slate-400 text-white py-2 cursor-pointer">
+            <Link
+              href="./register"
+              className="w-full text-center bg-slate-400 text-white py-2 cursor-pointer no-underline"
+            >
               REGISTER
-            </div>
+            </Link>
           </div>
         </div>
       </div>
-
-      <div className=" text-white">畫不出來</div>
+      <div className="text-xs text-white absolute top-1 right-2 cursor-pointer">
+      </div>
     </div>
   )
 }

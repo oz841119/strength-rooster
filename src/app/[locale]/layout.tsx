@@ -1,6 +1,7 @@
-import './globar.css'
-import './init.css'
+import '../globar.css'
+import '../init.css'
 import { Inter, Noto_Sans_TC } from 'next/font/google'
+
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', })
 const NotoSansTC = Noto_Sans_TC({
@@ -13,9 +14,9 @@ export const metadata = {
   title: '健身雞',
 }
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({children}: {children: React.ReactNode, params: any}) {
   return (
-    <html lang="zh-TW" >
+    <html lang='s' >
       <body className={fontClassName}>{children}</body>
     </html>
   )

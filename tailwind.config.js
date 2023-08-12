@@ -12,7 +12,10 @@ module.exports = {
     preflight: false,
   },
   theme: {
-    extend: {},
+    extend: {
+      width: {
+      }
+    },
   },
   plugins: [],
 }
