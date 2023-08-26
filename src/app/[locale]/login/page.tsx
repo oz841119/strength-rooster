@@ -1,6 +1,11 @@
+'use client'
+
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Page() {  
+  const [ account, setAccount ] = useState('')
+  const [ password, setPassword ] = useState('')
   return (
     <div className="w-full min-h-screen text-slate-700 flex">
       <div className="w-full min-h-screen bg-white md:w-5/12">
@@ -12,11 +17,11 @@ export default function Page() {
           <div className="w-4/5 flex flex-col">
             <label className="mb-4">
               <div className="text-sm">Account</div>
-              <input type="text" className="w-full h-9 px-2"/>
+              <input type="text" className="w-full h-9 px-2" onChange={(e) => setAccount(e.target.value)}/>
             </label>
             <label className="mb-2">
               <div className="text-sm">Password</div>
-              <input type="password" className="w-full h-9 px-2" />
+              <input type="password" className="w-full h-9 px-2" onChange={(e) => setPassword(e.target.value)}/>
             </label>
             <div className="flex justify-between mb-4">
               <label className="flex items-center">
