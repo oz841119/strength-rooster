@@ -1,12 +1,13 @@
 import { Alert, Snackbar } from "@mui/material";
 
-export default function SrSanckbar({ open, message, severity, handleClose }: SrSanckbarProps) {
+const SrSanckbar: React.FC<SrSanckbarProps> = ({ open, message, severity, handleClose }) => {
   return (
     <Snackbar
       open={open}
       autoHideDuration={5000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      disableWindowBlurListener={true}
     >
       <Alert severity={severity} sx={{ width: '300px' }}>
         {message}
@@ -14,10 +15,10 @@ export default function SrSanckbar({ open, message, severity, handleClose }: SrS
     </Snackbar>
   )
 }
-
+export default SrSanckbar
 interface SrSanckbarProps {
   open: boolean
   message: string
   severity: 'success' | 'error' | 'warning' | 'info'
-  handleClose: () => void
+  handleClose: (event: any, reason: string) => void
 }
