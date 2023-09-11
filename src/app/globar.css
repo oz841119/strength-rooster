@@ -9,38 +9,10 @@
 }
 
 body {
-  background-color: #292D32;
   color: #ffffff;
   font-family: var(--font-inter), var(--font-noto-sans-tc);
 }
 
-.flex-center {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.flex-center-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-start {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.common-border-b {
-  border-bottom: 2px solid #ffffff3a;
-}
-
-.common-border-title {
-  border: 2px solid #ffffff3a;
-  border-bottom: unset;
-}
-
-.common-border {
-  border: 2px solid #ffffff3a;
+ul, li, a {
+  all: unset
 }

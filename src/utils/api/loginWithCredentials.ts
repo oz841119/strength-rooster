@@ -4,9 +4,9 @@ interface Credentials {
   account: string,
   password: string
 }
-export function register({account, password}: Credentials) {
+export function loginWithCredentials({account, password}: Credentials) {
   return fetcher(
-      'http://localhost:3000/user',
+      'http://localhost:3000/auth/login',
       {method: 'POST', body: JSON.stringify({account, password})}
     )
 }

@@ -3,7 +3,7 @@ import SrSanckbar from "@/components/SrSnackbar";
 import Link from "next/link";
 import { useState } from "react";
 import useRegisterForm from "./useRegisterForm";
-import { postRegister } from "@/utils/api/register";
+import { register } from "@/utils/api";
 
 type SrSanckbarProps = React.ComponentProps<typeof SrSanckbar>
 type PickSrSanckbarProps = 'open' | 'message' | 'severity'
@@ -19,7 +19,7 @@ export default function Page() {
   const submit = async () => {
     const { isPass, message: errMessage } = validForm()
     if (!isPass) return setSnackbarInfo({ open: true, message: errMessage, severity: 'error' })
-    const registerResult = await postRegister({ account, password })
+    const registerResult = await register({ account, password })
     switch (registerResult.status) {
       case 201: {
         setSnackbarInfo({ open: true, message: 'Register success!', severity: 'success' })

@@ -1,3 +1,4 @@
+const {nextui} = require("@nextui-org/react");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,16 +8,27 @@ module.exports = {
  
     // Or if using `src` directory:
     './src/**/*.{js,ts,jsx,tsx,mdx}',
+    // Next UI
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   corePlugins: {
-    preflight: false,
+    preflight: true,
   },
   theme: {
     extend: {
-      width: {
+      colors: {
+        side: "#262b35",
+        main: "#1B202A",
+        select: "#464C59",
+        "card-title": "#A2A8B4"
       }
     },
   },
-  plugins: [],
+  darkMode: "class",
+  plugins: [
+    nextui({
+
+    })
+  ]
 }
 

@@ -1,5 +1,7 @@
-export default function page() {
+export default function Page({ params }: any) {
   return (
-    <div>Index</div>
+    <div className=" text-gray-950">
+      首頁
+    </div>
   )
 }

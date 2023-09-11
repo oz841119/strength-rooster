@@ -1,5 +1,9 @@
-import zh_tw from './local/zh-tw.json'
+import zh_tw from './locales/zh-tw.json'
+import getLocale from './utils/getLocale'
+import { defaultLocale } from './locales/locales'
 
 export {
-  zh_tw
+  zh_tw,
+  getLocale,
+  defaultLocale
 }
