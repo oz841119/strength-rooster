@@ -11,9 +11,13 @@ type ChipsProps = {
   onClose: (chip: Chip) => void
 }
 
-export default function Chips({chips, type, onClose}: ChipsProps) {
+export default function Chips({ chips, type, onClose }: ChipsProps) {
   const color = type === "menu" ? "warning" : "default"
-  return chips.map(chip => (
-    <Chip color={color} variant="bordered" onClose={() => onClose(chip)}>{chip.name}</Chip>
-  ))
+  return (
+    <div className="flex gap-2 flex-wrap">
+      {chips.map(chip => (
+        <Chip color={color} variant="bordered" onClose={() => onClose(chip)}>{chip.name}</Chip>
+      ))}
+    </div>
+  )
 }

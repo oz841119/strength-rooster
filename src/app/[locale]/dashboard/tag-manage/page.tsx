@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <div>
       <MenuCard/>
-      <Spacer y={4} />
+      <Spacer y={8} />
       <TagCard/>
     </div>
   )

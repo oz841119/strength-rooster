@@ -30,7 +30,7 @@ const Menu = ({ active }: { active?: string }) => (
 
 export default function Side() {
   return (
-    <div className="w-64">
+    <div className="w-64 bg-default-50 hidden md:block">
       <div className="font-bold h-12 flex justify-center items-center mb-8">S-ROOSTER</div>
       <Menu />
     </div>

@@ -20,9 +20,7 @@ export default function MenuCard() {
         <Input label="標籤名稱" variant="bordered" className="max-w-xs" size="sm" value={tagInp} onValueChange={setTagInp} />
         <Button size="sm" color="success" variant="faded" onClick={onTagSubmit}>送出</Button>
       </div>
-      <div className="flex gap-2">
-        <Chips chips={tags} onClose={onCloseMenu} type="tag"/>
-      </div>
+      <Chips chips={tags} onClose={onCloseMenu} type="tag"/>
     </DCard>
   )
 }
