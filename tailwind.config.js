@@ -17,9 +17,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        side: "#262b35",
-        main: "#1B202A",
-        select: "#464C59",
         "card-title": "#A2A8B4"
       }
     },

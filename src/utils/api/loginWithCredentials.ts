@@ -6,7 +6,7 @@ interface Credentials {
 }
 export function loginWithCredentials({account, password}: Credentials) {
   return fetcher(
-      'http://localhost:3000/auth/login',
+      'https://shy-puce-hippopotamus-tie.cyclic.cloud/auth/login',
       {method: 'POST', body: JSON.stringify({account, password})}
     )
 }

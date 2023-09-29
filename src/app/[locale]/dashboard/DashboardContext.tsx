@@ -1,5 +1,5 @@
-import { useParams, usePathname, useRouter } from "next/navigation"
-import { ReactElement, createContext, useContext, useState } from "react"
+import { usePathname } from "next/navigation"
+import { ReactElement, createContext, useContext } from "react"
 
 const MenuPathName: Record<string, string> = {
   "": '總覽',
@@ -12,10 +12,10 @@ const MenuPathName: Record<string, string> = {
 
 const getCurrMenuName = (path: string) => {
   const menuPathName = path.match(/\/zh-tw\/dashboard\/([^/]+)/)
-  if(!menuPathName) return MenuPathName[""]
+  if (!menuPathName) return MenuPathName[""]
   const name = menuPathName[1]
   return MenuPathName[name] || undefined
-} 
+}
 
 type DashboardContextStore = {
   menuName: string | undefined
@@ -23,10 +23,10 @@ type DashboardContextStore = {
 
 export const DashboardContext = createContext<DashboardContextStore | null>(null)
 
-export function DashboardContextProvider ({children}: {children: ReactElement}) {
+export function DashboardContextProvider({ children }: { children: ReactElement }) {
   const path = usePathname()
   const menuName = getCurrMenuName(path)
-  const state = {menuName}
+  const state = { menuName }
   return (
     <DashboardContext.Provider value={state}>
       {children}

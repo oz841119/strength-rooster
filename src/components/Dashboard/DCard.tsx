@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function DCard({children, title, isFull}: Props) {
-  let classNames = "py-4 px-5 rounded-lg border border-default-100 inline-block"
+  let classNames = "py-4 px-5 card-shadow rounded-xl inline-block"
   if(isFull) classNames += " w-full"
   return (
     <div className={classNames}>

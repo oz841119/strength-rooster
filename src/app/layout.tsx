@@ -9,11 +9,12 @@ const NotoSansTC = Noto_Sans_TC({
   variable: '--font-noto-sans-tc'
 })
 const fontClassName = `${inter.variable} ${NotoSansTC.variable}`
+const classNames = `${fontClassName}`
 
 export default function RootLayout({ children }: { children: React.ReactNode, params: any }) {
   return (
-    <html lang='s' >
-      <body className={fontClassName}>{children}</body>
+    <html lang='s'>
+      <body className={classNames}>{children}</body>
     </html>
   )
 }

@@ -2,7 +2,7 @@ import fetcher from "../fetcher";
 
 export function getUserProfile() {
   return fetcher(
-      'http://localhost:3000/user',
+      'https://shy-puce-hippopotamus-tie.cyclic.cloud/user',
       {method: 'GET'}
     )
 }

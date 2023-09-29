@@ -52,7 +52,7 @@ export default function RootLayout({ children, params }: { children: React.React
     <I18nProviderClient locale={params.locale} fallback={<p>Loading locales...</p>} fallbackLocale={zhTw}>
       <Providers>
         <DashboardContextProvider>
-          <div className="flex w-full min-h-screen dark bg-background text-foreground">
+          <div className="flex w-full min-h-screen bg-background text-foreground">
             <Side />
             <main className="flex-1">
               <div className="flex justify-end h-12 items-center pr-4">

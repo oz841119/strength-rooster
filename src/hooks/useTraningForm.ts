@@ -1,37 +1,28 @@
-import fetchWithJWT from '@/utils/globarFetch';
 import { useState } from 'react';
 interface TrainingForm {
   date: string
   name: string,
-  weight: number,
-  sets: number,
-  reps: number,
+  weight: string,
+  sets: string,
+  reps: string,
   note: string,
   tags: Array<string>
+  menu: string | null
 }
 
 export default function useTrainingForm(defaultValue?: Partial<TrainingForm>) {
   const [trainingForm, setTrainingForm] = useState<TrainingForm>({
     date: defaultValue?.date || '',
     name: defaultValue?.name || '',
-    weight: defaultValue?.weight || 0,
-    sets: defaultValue?.sets || 0,
-    reps: defaultValue?.reps || 0,
+    weight: defaultValue?.weight || '',
+    sets: defaultValue?.sets || '',
+    reps: defaultValue?.reps || '',
     note: defaultValue?.note || '',
-    tags: defaultValue?.tags || []
-  })
-  const submitTrainingForm = () => fetchWithJWT('/fitness-record', 'POST', {
-    date: trainingForm.date,
-    name: trainingForm.name,
-    weight: trainingForm.weight,
-    sets: trainingForm.sets,
-    reps: trainingForm.reps,
-    note: trainingForm.note,
-    tags: trainingForm.tags
+    tags: defaultValue?.tags || [],
+    menu: defaultValue?.menu || ''
   })
   return {
     trainingForm,
     setTrainingForm,
-    submitTrainingForm
   }
 }

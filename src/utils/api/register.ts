@@ -6,7 +6,7 @@ interface Credentials {
 }
 export function register({account, password}: Credentials) {
   return fetcher(
-      'http://localhost:3000/user',
+      'https://shy-puce-hippopotamus-tie.cyclic.cloud/user',
       {method: 'POST', body: JSON.stringify({account, password})}
     )
 }

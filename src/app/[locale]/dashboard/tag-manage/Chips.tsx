@@ -24,10 +24,12 @@ const typeColorMap: TypeColorMap = {
 
 export default function Chips({ chips, type, onClose }: ChipsProps) {
   const color = type ? typeColorMap[type] : "default"
+  console.log(chips);
+  
   return (
     <div className="flex gap-2 flex-wrap">
       {chips.map(chip => (
-        <Chip color={color} variant="bordered" onClose={() => onClose(chip)}>{chip.name}</Chip>
+        <Chip key={chip.id} color={color} variant="bordered" onClose={() => onClose(chip)}>{chip.name}</Chip>
       ))}
     </div>
   )

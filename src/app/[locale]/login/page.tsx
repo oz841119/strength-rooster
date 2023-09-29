@@ -24,7 +24,7 @@ export default function Page() {
   }
   return (
     <div className="w-full min-h-screen bg-main text-slate-700 flex">
-      <div className="w-full min-h-screen bg-white md:w-5/12">
+      <div className="w-full min-h-screen bg-slate-300 md:w-5/12">
         <div className="flex flex-col items-center pt-36 px-3 min-h-screen">
           <h2>STRENGTH ROOSTER</h2>
           <div className="text-slate-500 mb-10">

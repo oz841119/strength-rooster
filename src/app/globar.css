@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .component_date-select {
+    @apply hover:bg-slate-500 text-sm border-1 rounded-full w-6 h-6 flex justify-center items-center cursor-pointer;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,10 +15,13 @@
 }
 
 body {
-  color: #ffffff;
   font-family: var(--font-inter), var(--font-noto-sans-tc);
 }
 
 ul, li, a {
   all: unset
+}
+
+.card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
