@@ -5,8 +5,9 @@ interface Credentials {
   password: string
 }
 export function loginWithCredentials({account, password}: Credentials) {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL + '/auth/login'
   return fetcher(
-      'https://shy-puce-hippopotamus-tie.cyclic.cloud/auth/login',
+      API_URL,
       {method: 'POST', body: JSON.stringify({account, password})}
     )
 }

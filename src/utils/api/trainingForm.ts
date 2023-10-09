@@ -1,4 +1,4 @@
-// import fetcher from "../fetcher";
+import fetcher from "../fetcher";
 
 type CommonStructure = {name: string, id: number}
 type GetUserTrainingFormSelections = () => {menu: Array<CommonStructure>, tags: Array<CommonStructure>, exercises: Array<CommonStructure>}
@@ -8,4 +8,19 @@ const getUserTrainingFormSelections: GetUserTrainingFormSelections = () => {
   const exercises = [{ name: '槓鈴平板臥推', id: 34 }, { name: '啞鈴平板臥推', id: 32 }, { name: '紅器械平板臥推', id: 94 }, { name: '藍器械平板臥推', id: 87 }, { name: '槓鈴深蹲', id: 17 }, { name: '傳統硬舉', id: 947 }]
   return {menu, tags, exercises}
 }
-export { getUserTrainingFormSelections }
+
+
+type CreateTraingingFormParams = {
+  date: string,
+  menu: string,
+  actionName: string,
+  weight: number,
+  reps: number,
+  sets: number,
+  tags: Array<string>
+}
+const createTrainingForm = (params: CreateTraingingFormParams) => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL + '/training-form'
+  return fetcher(API_URL, {method: 'POST', body: JSON.stringify(params)})
+}
+export { getUserTrainingFormSelections, createTrainingForm }
