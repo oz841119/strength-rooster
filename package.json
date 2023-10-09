@@ -22,7 +22,7 @@
     "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
     "next": "13.4.5",
-    "next-international": "^0.9.5",
+    "next-international": "^1.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.0",

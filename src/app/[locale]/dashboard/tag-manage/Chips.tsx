@@ -1,9 +1,6 @@
 import { Chip } from "@nextui-org/react";
 
-type Chip = {
-  name: string
-  id: number
-}
+type Chip = string
 
 type ChipsProps = {
   chips: Array<Chip>
@@ -24,12 +21,10 @@ const typeColorMap: TypeColorMap = {
 
 export default function Chips({ chips, type, onClose }: ChipsProps) {
   const color = type ? typeColorMap[type] : "default"
-  console.log(chips);
-  
   return (
     <div className="flex gap-2 flex-wrap">
-      {chips.map(chip => (
-        <Chip key={chip.id} color={color} variant="bordered" onClose={() => onClose(chip)}>{chip.name}</Chip>
+      {Array.isArray(chips) && chips.map(chip => (
+        <Chip key={chip} color={color} variant="bordered" onClose={() => onClose(chip)}>{chip}</Chip>
       ))}
     </div>
   )

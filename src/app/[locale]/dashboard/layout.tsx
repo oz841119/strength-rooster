@@ -1,15 +1,13 @@
 'use client'
-
 import Side from './Side'
 import { getUserProfile } from "@/utils/api/getUserProfile"
-import { ReactElement, ReactNode, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { I18nProviderClient } from '@/locales/client';
 import { DashboardContextProvider, useDashboardContext } from './DashboardContext';
 import { Providers } from '@/app/providers';
-import zhTw from '@/locales/zh-tw';
 
 const UserNode = ({ userActivation }: { userActivation: string }) => userActivation && (
   <div className="flex justify-end items-center h-full">
@@ -47,9 +45,8 @@ export default function RootLayout({ children, params }: { children: React.React
         console.log('連線錯誤');
       })
   }, [])
-
   return (
-    <I18nProviderClient locale={params.locale} fallback={<p>Loading locales...</p>} fallbackLocale={zhTw}>
+    <I18nProviderClient locale={params.locale} fallback={<div>123</div>}>
       <Providers>
         <DashboardContextProvider>
           <div className="flex w-full min-h-screen bg-background text-foreground">
