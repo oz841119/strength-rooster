@@ -3,7 +3,7 @@ import { Chip } from "@nextui-org/react";
 type Chip = string
 
 type ChipsProps = {
-  chips: Array<Chip>
+  chips: Array<Chip> | undefined
   type?: 'menu' | 'tag' | 'action'
   onClose: (chip: Chip) => void
 }

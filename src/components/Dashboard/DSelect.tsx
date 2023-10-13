@@ -6,15 +6,20 @@ type Item = {
 }
 type Props = {
   label: string
-  items: Array<Item>
+  items: Array<string>
+  color: "default" | "primary" | "secondary" | "success" | "warning" | "danger" | undefined
   onChange: (id: Item["id"]) => void
 }
-export default function DSelect({ items, label, onChange }: Props) {
+export default function DSelect({ items, label, onChange, color }: Props) {
   const onSelectionChange = (e: any) => {
     onChange(e.target.value)}
   return (
-    <Select label={label} onChange={(e) => {onSelectionChange(e)}}>
-      {items && items.map(({ name, id }) => (<SelectItem key={id} value={id}>{name}</SelectItem>))}
+    <Select label={label} onChange={(e) => {onSelectionChange(e)}} color={color}>
+      {items && items.map((item, index) => (
+        <SelectItem key={index} value={item}>
+          {item}
+        </SelectItem>
+      ))}
     </Select>
   )
 }
