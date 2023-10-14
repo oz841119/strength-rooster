@@ -1,5 +1,6 @@
 import { usePathname } from "next/navigation"
-import { ReactElement, createContext, useContext } from "react"
+import { Dispatch, ReactElement, SetStateAction, createContext, useContext, useState } from "react"
+import DFullPageLoading from '@/components/Dashboard/DFullPageLoading'
 
 const MenuPathName: Record<string, string> = {
   "": '總覽',
@@ -19,6 +20,7 @@ const getCurrMenuName = (path: string) => {
 
 type DashboardContextStore = {
   menuName: string | undefined
+  setIsFullPageLoading: Dispatch<SetStateAction<boolean>>
 }
 
 export const DashboardContext = createContext<DashboardContextStore | null>(null)
@@ -26,9 +28,11 @@ export const DashboardContext = createContext<DashboardContextStore | null>(null
 export function DashboardContextProvider({ children }: { children: ReactElement }) {
   const path = usePathname()
   const menuName = getCurrMenuName(path)
-  const state = { menuName }
+  const [isFullPageLoading, setIsFullPageLoading] = useState<boolean>(false)
+  const state = { menuName, setIsFullPageLoading }
   return (
     <DashboardContext.Provider value={state}>
+      <DFullPageLoading isActive={isFullPageLoading}></DFullPageLoading>
       {children}
     </DashboardContext.Provider>
   )
