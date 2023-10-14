@@ -11,7 +11,7 @@ type CreateTraingingFormParams = {
   note: string
 }
 const createTrainingForm = (params: CreateTraingingFormParams) => {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL + '/training-form'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL + '/training'
   return fetcher(API_URL, {method: 'POST', body: JSON.stringify(params)})
 }
 export { createTrainingForm }
