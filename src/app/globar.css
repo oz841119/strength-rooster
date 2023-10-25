@@ -4,7 +4,7 @@
 
 @layer components {
   .component_date-select {
-    @apply hover:bg-slate-500 text-sm border-1 rounded-full w-6 h-6 flex justify-center items-center cursor-pointer;
+    @apply hover:bg-slate-500 hover:text-white text-sm border-1 rounded-full w-6 h-6 flex justify-center items-center cursor-pointer;
   }
 }
 
@@ -24,4 +24,9 @@ ul, li, a {
 
 .card-shadow {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.bg {
+  background: rgb(0,63,255);
+  background: linear-gradient(52deg, rgba(0,63,255,1) 0%, rgba(0,212,255,1) 100%);
 }

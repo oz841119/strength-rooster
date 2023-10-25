@@ -11,7 +11,7 @@ import { Providers } from '@/app/providers';
 
 const UserNode = ({ userActivation }: { userActivation: string }) => userActivation && (
   <div className="flex justify-end items-center h-full">
-    <div className="bg-side px-3 py-1 rounded-xl cursor-pointer flex items-center mr-2 hover:bg-select">
+    <div className="bg-side py-1 rounded-xl cursor-pointer flex items-center mr-1 hover:bg-select">
       <PersonIcon className='mr-2' />
       <span>{userActivation}</span>
     </div>
@@ -52,10 +52,10 @@ export default function RootLayout({ children, params }: { children: React.React
           <div className="flex w-full min-h-screen bg-background text-foreground">
             <Side />
             <main className="flex-1">
-              <div className="flex justify-end h-12 items-center pr-4">
+              <div className="flex justify-end h-14 border-b-2 items-center pr-4">
                 <UserNode userActivation={userAccount} />
               </div>
-              <div className="p-4">
+              <div className="py-4 px-16">
                 <PathNode />
                 {children}
               </div>

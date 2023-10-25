@@ -39,7 +39,7 @@ export default function Page() {
     setIsFullPageLoading(false)
   }
   return (
-    <div className="w-96 mx-auto">
+    <div className="w-96">
       <DCard isFull>
         <Input value={trainingForm.date} onChange={(e) => onFormChange('date', e.target.value)} label="訓練日期" variant="bordered" className="mb-2" size="sm" placeholder="YYYY-MM-DD" />
         <div className=" mb-4 pr-2 flex justify-end">
@@ -51,7 +51,7 @@ export default function Page() {
         <Input label="訓練次數" value={trainingForm.reps} onValueChange={(val) => onFormChange('reps', val)} color="secondary" {...BASE_INPUT_PROPS} />
         <Input label="訓練組數" value={trainingForm.sets} onValueChange={(val) => onFormChange('sets', val)} color="primary" {...BASE_INPUT_PROPS} />
         <DSelect color="default" items={annotation} label="註記標籤" onChange={(name) => onSelectChanege('tags', name)}></DSelect><Spacer y={4} />
-        <Button onClick={onSubmit} color="primary" className="w-full">送出紀錄</Button>
+        <Button onClick={onSubmit} color="primary" className="w-full bg font-bold">送出紀錄</Button>
       </DCard>
     </div>
   )

@@ -34,8 +34,8 @@ const Menu = () => {
 
 export default function Side() {
   return (
-    <div className="w-64 hidden md:block">
-      <div className="font-bold h-12 flex justify-center items-center mb-8">S-ROOSTER</div>
+    <div className="w-64 hidden md:block shadow-lg">
+      <div className="font-bold h-14 text-xl flex justify-center items-center mb-8 bg text-white shadow-md">S-ROOSTER</div>
       <Menu />
     </div>
   )
