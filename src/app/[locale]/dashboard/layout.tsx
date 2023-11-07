@@ -21,7 +21,7 @@ const UserNode = ({ userActivation }: { userActivation: string }) => userActivat
 
 const PathNode: React.FC = () => {
   const { menuName } = useDashboardContext()
-  return (<div className="mb-4"><b className=" text-sm text-card-title">{menuName}</b></div>)
+  return (<div className="mr-auto"><b className=" text-sm text-card-title">Dashboard / {menuName}</b></div>)
 }
 
 export default function RootLayout({ children, params }: { children: React.ReactNode, params: { locale: string } }) {
@@ -49,14 +49,13 @@ export default function RootLayout({ children, params }: { children: React.React
     <I18nProviderClient locale={params.locale} fallback={<div>123</div>}>
       <Providers>
         <DashboardContextProvider>
-          <div className="flex w-full min-h-screen bg-background text-foreground">
+          <div className="flex w-full min-h-screen bg-slate-50 text-foreground">
             <Side />
             <main className="flex-1">
-              <div className="flex justify-end h-14 border-b-2 items-center pr-4">
-                <UserNode userActivation={userAccount} />
+              <div className="flex justify-end h-24 items-center pr-4">
+                <PathNode /> <UserNode userActivation={userAccount} />
               </div>
-              <div className="py-4 px-16">
-                <PathNode />
+              <div className="pr-6">
                 {children}
               </div>
             </main>

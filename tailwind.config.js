@@ -18,13 +18,15 @@ module.exports = {
     extend: {
       colors: {
         "card-title": "#A2A8B4"
+      },
+      width: {
+        '48/100': '48%'
       }
     },
   },
   darkMode: "class",
   plugins: [
     nextui({
-
     })
   ]
 }

@@ -8,13 +8,16 @@ import { useDashboardContext } from './DashboardContext';
 const MenuItem = ({ name, path, icon, isActive }: { name: string, path: string, icon: any, isActive: boolean }) => {
   const classNames = `h-10 cursor-pointer flex items-center rounded-lg px-3 ${isActive ? 'text-primary' : ''}`
   const router = useRouter()
-  const routerPush = (routeName: string) => {
-    router.push(`/dashboard/${routeName}`)
+  const routerPush = (path: string) => {
+    router.push(`/dashboard/${path}`)
   }
   return (
     <li className={classNames} onClick={() => routerPush(path)}>
       {icon}<span className='ml-2'>{name}</span>
     </li>
+    // <li className={classNames} onClick={() => routerPush(path)}>
+    //   {icon}<span className='ml-2'>{name}</span>
+    // </li>
   )
 }
 
@@ -34,8 +37,8 @@ const Menu = () => {
 
 export default function Side() {
   return (
-    <div className="w-64 hidden md:block shadow-lg">
-      <div className="font-bold h-14 text-xl flex justify-center items-center mb-8 bg text-white shadow-md">S-ROOSTER</div>
+    <div className="w-64 hidden md:block">
+      <div className="font-bold h-24 text-xl flex justify-center items-center">S-ROOSTER</div>
       <Menu />
     </div>
   )
