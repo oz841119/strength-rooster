@@ -1,5 +1,6 @@
 import DCard from '@/components/Dashboard/DCard'
 import TrainingChart from '@/components/charts/TrainingChart'
+import DateBtnGround from './DateBtnGround'
 interface Training {
   weight: number
   reps: number
@@ -11,6 +12,7 @@ export default function Page() {
   return (
     <div className='w-full'>
       <DCard isFull>
+        <DateBtnGround/>
         <TrainingChart data={trainings} />
       </DCard>
     </div>
